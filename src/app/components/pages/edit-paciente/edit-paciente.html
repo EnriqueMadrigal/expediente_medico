@@ -115,10 +115,27 @@
 
           <div class="row g-3 mb-4">
 
-        <div class="col-md-10">
+        <div class="col-md-3">
             <label class="form-label">Colonia</label>
             <input type="text" class="form-control" formControlName="colonia">
           </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Municipio</label>
+            <input type="text" class="form-control" formControlName="municipio">
+          </div>
+
+
+          <div class="col-md-2">
+            <label class="form-label">Estado:</label><br />
+            <select class="form-select" formControlName="religion">
+               @for (item of componentText6(); track item.valueId) {
+              <option [value]="item.valueId">{{ item.textValue }}</option>
+                    } 
+            </select>
+          </div>
+
+
 
         <div class="col-md-2">
             <label class="form-label">C.P.</label>

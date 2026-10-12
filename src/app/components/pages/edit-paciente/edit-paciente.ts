@@ -31,6 +31,7 @@ authService: any;
   componentText3 = signal<ComponentsText[]>([]);
   componentText4 = signal<ComponentsText[]>([]);
   componentText5 = signal<ComponentsText[]>([]);
+  componentText6 = signal<ComponentsText[]>([]);
 
   currentUser: Paciente = {
   id: 0,
@@ -45,7 +46,7 @@ authService: any;
   apodo: "",
   calle: "",
   estado: 14,
-  municipio: 1,
+  municipio: "",
   cp: 0,
   telefonoCasa: "",
   telefonoCelular: "",
@@ -89,7 +90,7 @@ authService: any;
     this.safeCallComponents(this.componentText3,"3");
     this.safeCallComponents(this.componentText4,"4");
     this.safeCallComponents(this.componentText5,"5");
-
+    this.safeCallComponents(this.componentText6,"8");
 
 
     if (id != "0") {

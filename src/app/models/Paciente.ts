@@ -11,7 +11,7 @@ export interface Paciente {
   apodo?: string;
   calle?: string;
   estado: number;
-  municipio: number;
+  municipio: string;
   cp: number;
   telefonoCasa?: string;
   telefonoCelular?: string;
