@@ -52,12 +52,7 @@
                     <p>Antecedentes Personales</p>
                   </div>
                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="ionicon"><path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32px"/><path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48 15.65-21.4C431.3 352 343 304 256 304Z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32px"/></svg>
-                  <a
-                    href="#"
-                    class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover"
-                  >
-                    Editar<i class="bi bi-link-45deg"></i>
-                  </a>
+                  <a class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover" [routerLink]="['/editAntecedentesPersonales', currentUser.id]" routerLinkActive="active">Editar</a>
                 </div>
                 <!--end::Small Box Widget 1-->
 
