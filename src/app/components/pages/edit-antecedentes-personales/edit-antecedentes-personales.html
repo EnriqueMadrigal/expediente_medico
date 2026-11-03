@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Antecedentes Personales Patalogicos</h1>
+            <h1 class="m-0">Antecedentes Personales Patologicos</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -44,12 +44,16 @@
 
   </div>
 
+ @if (showAntecedentes) {
+  
+
 <div class="row mt-4 mb-4">
   <div class="col-12 col-md-2 mb-3">
     <button
       type="button"
       class="btn btn-danger d-flex align-items-center justify-content-center"
-      style="width: 100%; min-height: 60px; padding: 25px; font-size: 16px; font-weight: bold; border-radius: 10px;">
+      style="width: 100%; min-height: 60px; padding: 25px; font-size: 16px; font-weight: bold; border-radius: 10px;"
+      (click)="editTraumatismo()">
       🦴 TRAUMATISMOS
     </button>
   </div>
@@ -156,6 +160,12 @@
 
 </div>
   
+ }
+
+</div>
+
+
+
 
 
 

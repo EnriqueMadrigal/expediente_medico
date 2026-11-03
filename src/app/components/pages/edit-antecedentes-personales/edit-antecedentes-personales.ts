@@ -28,7 +28,8 @@ authService: any;
   curUser!: User;
   userId =  "";
   isLoading = false;
-
+  id = "";
+  showAntecedentes= true;
 
 constructor(private router: Router,
     private alerts: AlertService,
@@ -44,7 +45,8 @@ constructor(private router: Router,
 ngOnInit(): void {
   //this.initForm();
  this.userId = this.auth.getUserId() ?? "0";
-     const id = this.route.snapshot.paramMap.get('id') ?? "";
+     //const id = this.route.snapshot.paramMap.get('id') ?? "";
+     this.id = this.route.snapshot.paramMap.get('id') ?? "";
     
     //this.safeCallComponents(this.componentText1,"0");
     //this.safeCallComponents(this.componentText2,"6");
@@ -70,7 +72,16 @@ ngAfterViewInit(): void {
 mostrarEnfermedades(values:any): void {
 
   console.log(values.currentTarget.checked);
+
+  this.showAntecedentes = values.currentTarget.checked;
 }
+
+editTraumatismo(): void {
+ this.router.navigate(['/editTraumatismo/'+ this.id]);
+  
+}
+
+
 
 
 }
