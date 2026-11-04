@@ -17,13 +17,94 @@
     <!-- /.content-header -->
 
 <div class="card-body">
+<div class="container-fluid">
+  <div class="card card-primary">
+    <div class="card-header">
+      <h3 class="card-title">🦴 Antecedentes de traumatismos</h3>
+    </div>
 
+    <div class="card-body">
+      <h5>1. ¿El paciente ha sufrido algún traumatismo?</h5>
 
+      <div class="form-group">
+        <label>
+          <input
+            type="radio"
+            name="sufrioTraumatismo"
+            [value]="'si'"
+            [(ngModel)]="sufrioTraumatismo">
+          Sí
+        </label>
 
+        <label class="ml-3">
+          <input
+            type="radio"
+            name="sufrioTraumatismo"
+            [value]="'no'"
+            [(ngModel)]="sufrioTraumatismo">
+          No
+        </label>
+      </div>
 
+      <div *ngIf="sufrioTraumatismo === 'si'">
+        <div class="form-group">
+          <label>Tipo de traumatismo</label>
+          <select class="form-control" [(ngModel)]="tipoTraumatismo">
+            <option value="">Seleccionar...</option>
+            <option value="Fractura">Fractura</option>
+            <option value="Luxación">Luxación</option>
+            <option value="Esguince">Esguince</option>
+            <option value="Contusión">Contusión</option>
+            <option value="Herida">Herida</option>
+            <option value="Quemadura">Quemadura</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
 
+        <div class="form-group">
+          <label>Fecha del traumatismo</label>
+          <input type="date" class="form-control"
+            [(ngModel)]="fechaTraumatismo">
+        </div>
 
+        <div class="form-group">
+          <label>Parte del cuerpo afectada</label>
+          <input type="text" class="form-control"
+            [(ngModel)]="parteCuerpo"
+            placeholder="Ej. brazo derecho">
+        </div>
 
+        <div class="form-group">
+          <label>Descripción del traumatismo</label>
+          <textarea class="form-control" rows="3"
+            [(ngModel)]="descripcionTraumatismo"
+            placeholder="Describa qué ocurrió..."></textarea>
+        </div>
 
+        <div class="form-group">
+          <label>Tratamiento recibido</label>
+          <textarea class="form-control" rows="2"
+            [(ngModel)]="tratamiento"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>¿Quedaron secuelas?</label>
+          <textarea class="form-control" rows="2"
+            [(ngModel)]="secuela"
+            placeholder="Describa las secuelas o escriba Ninguna"></textarea>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-success"
+        (click)="guardarTraumatismo()">
+        Guardar traumatismo
+      </button>
+
+      <button type="button" class="btn btn-secondary ml-2"
+        (click)="regresar()">
+        Regresar
+      </button>
+    </div>
+  </div>
 </div>
-</div>    
+

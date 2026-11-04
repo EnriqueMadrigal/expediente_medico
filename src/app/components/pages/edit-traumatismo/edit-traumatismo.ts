@@ -19,7 +19,37 @@ import { ComponentsText } from '../../../models/ComponentsText';
   styleUrl: './edit-traumatismo.css',
 })
 export class EditTraumatismo implements OnInit{
+sufrioTraumatismo: string = '';
 
+tipoTraumatismo: string = '';
+fechaTraumatismo: string = '';
+parteCuerpo: string = '';
+descripcionTraumatismo: string = '';
+tratamiento: string = '';
+secuela: string = '';
+
+guardarTraumatismo(): void {
+  const datos = {
+    sufrioTraumatismo: this.sufrioTraumatismo,
+    tipoTraumatismo: this.tipoTraumatismo,
+    fechaTraumatismo: this.fechaTraumatismo,
+    parteCuerpo: this.parteCuerpo,
+    descripcionTraumatismo: this.descripcionTraumatismo,
+    tratamiento: this.tratamiento,
+    secuela: this.secuela
+  };
+
+  localStorage.setItem(
+    'antecedentesTraumatismos',
+    JSON.stringify(datos)
+  );
+
+  alert('Antecedentes de traumatismos guardados correctamente.');
+}
+
+regresar(): void {
+  window.history.back();
+}
 authService: any;
   curUser!: User;
   userId =  "";
