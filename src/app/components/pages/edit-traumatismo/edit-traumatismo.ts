@@ -1,4 +1,4 @@
-import { Component, OnInit, inject ,input, signal, WritableSignal } from '@angular/core';
+import { Component, OnInit, inject ,input, signal, WritableSignal, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from '../../../services/alertServices';
@@ -9,6 +9,8 @@ import { firstValueFrom } from 'rxjs';
 import { ResponseData } from '../../../models/ResponseData';
 import { ComponentsTextService } from '../../../services/componentsText.service';
 import { ComponentsText } from '../../../models/ComponentsText';
+import { Traumatismo } from '../../../models/Traumatismo';
+import { Location } from '@angular/common';
 
 
 
@@ -18,38 +20,10 @@ import { ComponentsText } from '../../../models/ComponentsText';
   templateUrl: './edit-traumatismo.html',
   styleUrl: './edit-traumatismo.css',
 })
-export class EditTraumatismo implements OnInit{
-sufrioTraumatismo: string = '';
+export class EditTraumatismo implements OnInit, AfterViewInit{
 
-tipoTraumatismo: string = '';
-fechaTraumatismo: string = '';
-parteCuerpo: string = '';
-descripcionTraumatismo: string = '';
-tratamiento: string = '';
-secuela: string = '';
 
-guardarTraumatismo(): void {
-  const datos = {
-    sufrioTraumatismo: this.sufrioTraumatismo,
-    tipoTraumatismo: this.tipoTraumatismo,
-    fechaTraumatismo: this.fechaTraumatismo,
-    parteCuerpo: this.parteCuerpo,
-    descripcionTraumatismo: this.descripcionTraumatismo,
-    tratamiento: this.tratamiento,
-    secuela: this.secuela
-  };
-
-  localStorage.setItem(
-    'antecedentesTraumatismos',
-    JSON.stringify(datos)
-  );
-
-  alert('Antecedentes de traumatismos guardados correctamente.');
-}
-
-regresar(): void {
-  window.history.back();
-}
+traumaForm!: FormGroup;
 authService: any;
   curUser!: User;
   userId =  "";
@@ -57,29 +31,151 @@ authService: any;
   id = "";
 
 
-  constructor(private router: Router,
+  componentText1 = signal<ComponentsText[]>([]);
+  componentText2 = signal<ComponentsText[]>([]);
+  componentText3 = signal<ComponentsText[]>([]);
+ 
+  currentTrauma: Traumatismo = {
+    id: 0,
+    id_paciente: 0,
+    traumatismo: true,
+    id_trauma: 0,
+    trauma: '',
+    zona_afectada: '',
+    fecha: new Date(),
+    id_tratamiento: 0,
+    tratamiento: '',
+    secuelas: true,
+    id_secuela: 0,
+    secuela: '',
+    observaciones: '',
+    created_at: new Date(),
+    updated_at: new Date()  
+  }
+
+ constructor(private router: Router,
     private alerts: AlertService,
     private fb: FormBuilder, 
     private componentsTextService : ComponentsTextService,
     private auth: AuthService,
+    private location: Location,
     private route: ActivatedRoute ) {
     this.authService = auth;
    }
 
-
 ngOnInit(): void {
-  //this.initForm();
+  this.initForm();
  this.userId = this.auth.getUserId() ?? "0";
      //const id = this.route.snapshot.paramMap.get('id') ?? "";
      this.id = this.route.snapshot.paramMap.get('id') ?? "";
     
-    //this.safeCallComponents(this.componentText1,"0");
-    //this.safeCallComponents(this.componentText2,"6");
-    //this.safeCallComponents(this.componentText3,"7");
+    this.safeCallComponents(this.componentText1,"9");
+    this.safeCallComponents(this.componentText2,"10");
+    this.safeCallComponents(this.componentText3,"11");
 
+}
+
+initForm(): void {
+
+  this.traumaForm = new FormGroup({
+    sufrioTraumatismo: new FormControl(this.currentTrauma.traumatismo, Validators.required),
+    tipoTraumatismo: new FormControl(this.currentTrauma.id_trauma, Validators.required),
+    otroTraumatismo: new FormControl(this.currentTrauma.trauma, Validators.required),
+    parteCuerpo: new FormControl(this.currentTrauma.zona_afectada, Validators.required),
+    fechaTraumatismo: new FormControl(this.currentTrauma.fecha, Validators.required),
+    tipoTratamiento: new FormControl(this.currentTrauma.id_tratamiento, Validators.required),
+    tratamiento: new FormControl(this.currentTrauma.tratamiento, Validators.required),
+    quedaron_secuelas: new FormControl(this.currentTrauma.secuelas, Validators.required),
+    tipoSecuela: new FormControl(this.currentTrauma.id_secuela, Validators.required),
+    secuela: new FormControl(this.currentTrauma.secuela, Validators.required),
+    observaciones: new FormControl(this.currentTrauma.observaciones, Validators.required),
+   
+  });
 
 
 }
+
+
+
+
+async safeCallComponents(arraySignal: WritableSignal<ComponentsText[]>, id: string) {
+   
+
+      this.componentsTextService.getComponents(id).subscribe({
+        next: (data) => {
+                    //this.pacientes = [...this.pacientes, data];   
+          //this.componentText1.update(currentItems => data);   
+          arraySignal.update(currentItems => data);   
+          //arraySignal.update(() => [...data]);
+          
+          console.log(this.componentText1);
+          console.log(data);
+
+        },
+        error: (err) => {
+          console.error("Error reading Sexos");
+          return [];
+        }
+
+      });
+
+    //const data = await firstValueFrom(this.pacienteService.getPacientes()); 
+
+  
+}
+
+
+onSubmit(): void {
+    if (this.traumaForm.valid) {
+      const datosTrauma: Traumatismo = this.traumaForm.value;
+      this.isLoading = true;
+      datosTrauma.id_paciente = Number(this.userId);
+      console.log('Datos a enviar:', datosTrauma );
+      // Aquí llamarías a tu servicio para guardar en la DB
+          //Registro de nuevos pacientes
+         
+        if(datosTrauma.id == 0) {
+          //this.RegisterNewPaciente(datosPaciente);
+        }
+        else {
+          //this.UpdatePaciente(datosPaciente);
+        }
+
+
+    } else {
+      Object.values(this.traumaForm.controls).forEach(control => {
+        control.markAsTouched();
+      });
+    }
+  }
+
+
+
+
+
+
+regresar(): void {
+  window.history.back();
+}
+
+ngAfterViewInit(): void {
+  
+     const switches = document.querySelectorAll(
+      '[data-toggle="switchbutton"]'
+    );
+
+    switches.forEach((element: any) => {
+      element.switchButton();
+    });
+
+  }
+
+
+ 
+clickCancel(){
+      this.location.back();
+}
+
 
 
 

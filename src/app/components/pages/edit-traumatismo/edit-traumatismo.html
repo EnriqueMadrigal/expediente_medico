@@ -17,94 +17,173 @@
     <!-- /.content-header -->
 
 <div class="card-body">
-<div class="container-fluid">
-  <div class="card card-primary">
-    <div class="card-header">
-      <h3 class="card-title">🦴 Antecedentes de traumatismos</h3>
-    </div>
 
-    <div class="card-body">
-      <h5>1. ¿El paciente ha sufrido algún traumatismo?</h5>
+  <form [formGroup]="traumaForm" (ngSubmit)="onSubmit()">
 
-      <div class="form-group">
-        <label>
-          <input
-            type="radio"
-            name="sufrioTraumatismo"
-            [value]="'si'"
-            [(ngModel)]="sufrioTraumatismo">
-          Sí
-        </label>
+  
+ <div class="row g-3 mb-4">
+     
+  <div class="col-md-3">
+      <label class="form-label">¿Ha tenido algún traumatismo?<span class="text-danger">* &nbsp;</span></label>
+    <input
+      id="chkSwitch"
+      class="form-control"
+      formControlName="sufrioTraumatismo"
+      type="checkbox"
+      data-toggle="switchbutton"
+      data-onlabel="Sí"
+      data-offlabel="No"
+      data-size="sm"
+      data-onstyle="success"
+      data-offstyle="danger" checked>
+      
 
-        <label class="ml-3">
-          <input
-            type="radio"
-            name="sufrioTraumatismo"
-            [value]="'no'"
-            [(ngModel)]="sufrioTraumatismo">
-          No
-        </label>
-      </div>
+ </div>
 
-      <div *ngIf="sufrioTraumatismo === 'si'">
-        <div class="form-group">
-          <label>Tipo de traumatismo</label>
-          <select class="form-control" [(ngModel)]="tipoTraumatismo">
-            <option value="">Seleccionar...</option>
-            <option value="Fractura">Fractura</option>
-            <option value="Luxación">Luxación</option>
-            <option value="Esguince">Esguince</option>
-            <option value="Contusión">Contusión</option>
-            <option value="Herida">Herida</option>
-            <option value="Quemadura">Quemadura</option>
-            <option value="Otro">Otro</option>
-          </select>
-        </div>
 
-        <div class="form-group">
-          <label>Fecha del traumatismo</label>
-          <input type="date" class="form-control"
-            [(ngModel)]="fechaTraumatismo">
-        </div>
 
-        <div class="form-group">
-          <label>Parte del cuerpo afectada</label>
-          <input type="text" class="form-control"
-            [(ngModel)]="parteCuerpo"
-            placeholder="Ej. brazo derecho">
-        </div>
-
-        <div class="form-group">
-          <label>Descripción del traumatismo</label>
-          <textarea class="form-control" rows="3"
-            [(ngModel)]="descripcionTraumatismo"
-            placeholder="Describa qué ocurrió..."></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>Tratamiento recibido</label>
-          <textarea class="form-control" rows="2"
-            [(ngModel)]="tratamiento"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>¿Quedaron secuelas?</label>
-          <textarea class="form-control" rows="2"
-            [(ngModel)]="secuela"
-            placeholder="Describa las secuelas o escriba Ninguna"></textarea>
-        </div>
-      </div>
-
-      <button type="button" class="btn btn-success"
-        (click)="guardarTraumatismo()">
-        Guardar traumatismo
-      </button>
-
-      <button type="button" class="btn btn-secondary ml-2"
-        (click)="regresar()">
-        Regresar
-      </button>
-    </div>
   </div>
+
+
+<div class="row g-3 mb-4">
+
+          <div class="col-md-2">
+            <label class="form-label">Tipo de traumatismo:  </label><br />
+            <select class="form-select" formControlName="tipoTraumatismo">
+                 @for (item of componentText1(); track item.valueId) {
+              <option [value]="item.valueId">{{ item.textValue }}</option>
+                    } 
+            </select>
+          </div>
+
+<div class="col-md-3">
+            <label class="form-label">Otro traumatismo <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" formControlName="otroTraumatismo">
+          </div>
+
+        </div>
+
+
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+            <label class="form-label">Zona Afectada <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" formControlName="parteCuerpo">
+          </div>
+
+ </div>
+
+
+ <div class="row g-3 mb-4">
+          <div class="col-md-3">
+            <label class="form-label">Fecha:</label>
+            <input type="date" class="form-control" formControlName="fechaTraumatismo">
+          </div>
+        </div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-6">
+<h5 class="text-secondary border-bottom pb-2 mb-3">Tratamiento recibido: </h5>
+</div>
+</div>
+
+
+<div class="row g-3 mb-4">
+
+          <div class="col-md-2">
+            <label class="form-label">Tipo de tratamiento </label><br />
+            <select class="form-select" formControlName="tipoTratamiento">
+                 @for (item of componentText2(); track item.valueId) {
+              <option [value]="item.valueId">{{ item.textValue }}</option>
+                    } 
+            </select>
+          </div>
+
+<div class="col-md-3">
+            <label class="form-label">Otro <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" formControlName="tratamiento">
+          </div>
+
+        </div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-6">
+  <h5 class="text-secondary border-bottom pb-2 mb-3">Secuelas</h5>
+  </div>
+</div>
+
+
+<div class="row g-3 mb-4">
+  
+     
+  <div class="col-md-3">
+    <label class="form-label">¿Quedaron secuelas?<span class="text-danger">* &nbsp;</span></label>
+     
+    <input
+      id="chkSwitch"
+      class="form-control"
+      formControlName="quedaron_secuelas"
+      type="checkbox"
+      data-toggle="switchbutton"
+      data-onlabel="Sí"
+      data-offlabel="No"
+      data-size="sm"
+      data-onstyle="success"
+      data-offstyle="danger" checked>
+ </div>
+
+</div>
+
+<div class="row g-3 mb-4">
+
+
+ <div class="col-md-2">
+            <label class="form-label">Secuela:  </label><br />
+            <select class="form-control" formControlName="tipoSecuela">
+                 @for (item of componentText3(); track item.valueId) {
+              <option [value]="item.valueId">{{ item.textValue }}</option>
+                    } 
+            </select>
+          </div>
+
+     
+
+<div class="col-md-3">
+            <label class="form-label">Otro tipo secuela <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" formControlName="secuela">
+          </div>
+
+        </div>
+
+
+<div class="row g-3 mb-4">
+  <div class="col-md-6">
+  <h5 class="text-secondary border-bottom pb-2 mb-3">Observaciones</h5>
+  </div>
+</div>
+
+
+<div class="row g-3 mb-4">
+<div class="col-md-3">
+<textarea placeholder="observaciones" formControlName="observaciones" cols="60" rows="3" required></textarea>
+</div>
+</div>
+
+<div class="row g-3 mb-4">
+<div class="col-md-6">
+
+ <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button type="button" class="btn btn-secondary me-md-2" (click)="clickCancel()">Cancelar</button>
+          &nbsp;&nbsp;&nbsp;
+          <button type="submit" class="btn btn-primary" [disabled]="traumaForm.invalid">
+            Guardar traumatismo
+            <span class="spinner-border spinner-border-sm" aria-hidden="true" [hidden]="!isLoading"></span> 
+          </button>
+        </div>
+</div>
+</div>
+
+</form>
+
+
 </div>
 
