@@ -29,6 +29,7 @@ authService: any;
   userId =  "";
   isLoading = false;
   id = "";
+  showTrauma = true;
 
 
   componentText1 = signal<ComponentsText[]>([]);
@@ -130,6 +131,7 @@ onSubmit(): void {
       const datosTrauma: Traumatismo = this.traumaForm.value;
       this.isLoading = true;
       datosTrauma.id_paciente = Number(this.userId);
+      datosTrauma.traumatismo = this.showTrauma;
       console.log('Datos a enviar:', datosTrauma );
       // Aquí llamarías a tu servicio para guardar en la DB
           //Registro de nuevos pacientes
@@ -176,6 +178,12 @@ clickCancel(){
       this.location.back();
 }
 
+mostrarTrauma(values:any): void {
+
+  console.log(values.currentTarget.checked);
+
+  this.showTrauma = values.currentTarget.checked;
+}
 
 
 

@@ -18,7 +18,7 @@
 
 <div class="card-body">
 
-  <form [formGroup]="traumaForm" (ngSubmit)="onSubmit()">
+ 
 
   
  <div class="row g-3 mb-4">
@@ -28,15 +28,16 @@
     <input
       id="chkSwitch"
       class="form-control"
-      formControlName="sufrioTraumatismo"
       type="checkbox"
       data-toggle="switchbutton"
       data-onlabel="Sí"
       data-offlabel="No"
       data-size="sm"
       data-onstyle="success"
-      data-offstyle="danger" checked>
-      
+      data-offstyle="danger"
+       (change)="mostrarTrauma($event)"
+       checked
+       >
 
  </div>
 
@@ -45,12 +46,16 @@
   </div>
 
 
+@if(showTrauma) {
+
+ <form [formGroup]="traumaForm" (ngSubmit)="onSubmit()">
+
 <div class="row g-3 mb-4">
 
           <div class="col-md-2">
             <label class="form-label">Tipo de traumatismo:  </label><br />
             <select class="form-select" formControlName="tipoTraumatismo">
-                 @for (item of componentText1(); track item.valueId) {
+                 @for (item of componentText1(); track item.Id) {
               <option [value]="item.valueId">{{ item.textValue }}</option>
                     } 
             </select>
@@ -92,7 +97,7 @@
           <div class="col-md-2">
             <label class="form-label">Tipo de tratamiento </label><br />
             <select class="form-select" formControlName="tipoTratamiento">
-                 @for (item of componentText2(); track item.valueId) {
+                 @for (item of componentText2(); track item.Id) {
               <option [value]="item.valueId">{{ item.textValue }}</option>
                     } 
             </select>
@@ -115,15 +120,14 @@
 <div class="row g-3 mb-4">
   
      
-  <div class="col-md-3">
-    <label class="form-label">¿Quedaron secuelas?<span class="text-danger">* &nbsp;</span></label>
+  <div class="col-md-4">
+    <label class="form-label">¿Quedaron secuelas?</label>
      
     <input
-      id="chkSwitch"
-      class="form-control"
+         class="form-control"
       formControlName="quedaron_secuelas"
       type="checkbox"
-      data-toggle="switchbutton"
+      style ="width: 20% !important; height: 50% !important;"
       data-onlabel="Sí"
       data-offlabel="No"
       data-size="sm"
@@ -139,7 +143,7 @@
  <div class="col-md-2">
             <label class="form-label">Secuela:  </label><br />
             <select class="form-control" formControlName="tipoSecuela">
-                 @for (item of componentText3(); track item.valueId) {
+                 @for (item of componentText3(); track item.Id) {
               <option [value]="item.valueId">{{ item.textValue }}</option>
                     } 
             </select>
@@ -183,7 +187,19 @@
 </div>
 
 </form>
+}
+@else {
 
+<div class="row g-3 mb-4">
+<div class="col-md-2">
+
+ <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button type="button" class="btn btn-primary me-md-2" (click)="clickCancel()">Continuar</button>
+</div>
+</div>          &nbsp;&nbsp;&nbsp;
+</div>
+
+}
 
 </div>
 
