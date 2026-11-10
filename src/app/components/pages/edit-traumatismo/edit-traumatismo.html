@@ -54,7 +54,7 @@
 
           <div class="col-md-2">
             <label class="form-label">Tipo de traumatismo:  </label><br />
-            <select class="form-select" formControlName="tipoTraumatismo">
+            <select class="form-select" formControlName="id_trauma" name="id_trauma">
                  @for (item of componentText1(); track item.Id) {
               <option [value]="item.valueId">{{ item.textValue }}</option>
                     } 
@@ -63,7 +63,7 @@
 
 <div class="col-md-3">
             <label class="form-label">Otro traumatismo <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" formControlName="otroTraumatismo">
+            <input type="text" class="form-control" formControlName="trauma">
           </div>
 
         </div>
@@ -72,7 +72,7 @@
 <div class="row g-3 mb-4">
   <div class="col-md-4">
             <label class="form-label">Zona Afectada <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" formControlName="parteCuerpo">
+            <input type="text" class="form-control" formControlName="zona_afectada">
           </div>
 
  </div>
@@ -81,7 +81,7 @@
  <div class="row g-3 mb-4">
           <div class="col-md-3">
             <label class="form-label">Fecha:</label>
-            <input type="date" class="form-control" formControlName="fechaTraumatismo">
+            <input type="date" class="form-control" formControlName="fecha">
           </div>
         </div>
 
@@ -96,7 +96,7 @@
 
           <div class="col-md-2">
             <label class="form-label">Tipo de tratamiento </label><br />
-            <select class="form-select" formControlName="tipoTratamiento">
+            <select class="form-select" formControlName="id_tratamiento" name="id_tratamiento">
                  @for (item of componentText2(); track item.Id) {
               <option [value]="item.valueId">{{ item.textValue }}</option>
                     } 
@@ -125,7 +125,7 @@
      
     <input
          class="form-control"
-      formControlName="quedaron_secuelas"
+      formControlName="secuelas"
       type="checkbox"
       style ="width: 20% !important; height: 50% !important;"
       data-onlabel="Sí"
@@ -142,7 +142,7 @@
 
  <div class="col-md-2">
             <label class="form-label">Secuela:  </label><br />
-            <select class="form-control" formControlName="tipoSecuela">
+            <select class="form-control" formControlName="id_secuela" name="id_secuela">
                  @for (item of componentText3(); track item.Id) {
               <option [value]="item.valueId">{{ item.textValue }}</option>
                     } 
@@ -178,7 +178,7 @@
  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
           <button type="button" class="btn btn-secondary me-md-2" (click)="clickCancel()">Cancelar</button>
           &nbsp;&nbsp;&nbsp;
-          <button type="submit" class="btn btn-primary" [disabled]="traumaForm.invalid">
+          <button type="submit" class="btn btn-primary">
             Guardar traumatismo
             <span class="spinner-border spinner-border-sm" aria-hidden="true" [hidden]="!isLoading"></span> 
           </button>

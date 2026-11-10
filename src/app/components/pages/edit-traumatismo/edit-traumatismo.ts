@@ -79,15 +79,15 @@ ngOnInit(): void {
 initForm(): void {
 
   this.traumaForm = new FormGroup({
-    sufrioTraumatismo: new FormControl(this.currentTrauma.traumatismo, Validators.required),
-    tipoTraumatismo: new FormControl(this.currentTrauma.id_trauma, Validators.required),
-    otroTraumatismo: new FormControl(this.currentTrauma.trauma, Validators.required),
-    parteCuerpo: new FormControl(this.currentTrauma.zona_afectada, Validators.required),
-    fechaTraumatismo: new FormControl(this.currentTrauma.fecha, Validators.required),
-    tipoTratamiento: new FormControl(this.currentTrauma.id_tratamiento, Validators.required),
+    traumatismo: new FormControl(this.currentTrauma.traumatismo, Validators.required),
+    id_trauma: new FormControl(this.currentTrauma.id_trauma, Validators.required),
+    trauma: new FormControl(this.currentTrauma.trauma, Validators.required),
+    zona_afectada: new FormControl(this.currentTrauma.zona_afectada, Validators.required),
+    fecha: new FormControl(this.currentTrauma.fecha, Validators.required),
+    id_tratamiento: new FormControl(this.currentTrauma.id_tratamiento, Validators.required),
     tratamiento: new FormControl(this.currentTrauma.tratamiento, Validators.required),
-    quedaron_secuelas: new FormControl(this.currentTrauma.secuelas, Validators.required),
-    tipoSecuela: new FormControl(this.currentTrauma.id_secuela, Validators.required),
+    secuelas: new FormControl(this.currentTrauma.secuelas, Validators.required),
+    id_secuela: new FormControl(this.currentTrauma.id_secuela, Validators.required),
     secuela: new FormControl(this.currentTrauma.secuela, Validators.required),
     observaciones: new FormControl(this.currentTrauma.observaciones, Validators.required),
    
@@ -127,10 +127,12 @@ async safeCallComponents(arraySignal: WritableSignal<ComponentsText[]>, id: stri
 
 
 onSubmit(): void {
-    if (this.traumaForm.valid) {
+
+
+  
       const datosTrauma: Traumatismo = this.traumaForm.value;
       this.isLoading = true;
-      datosTrauma.id_paciente = Number(this.userId);
+      datosTrauma.id_paciente = Number(this.id);
       datosTrauma.traumatismo = this.showTrauma;
       console.log('Datos a enviar:', datosTrauma );
       // Aquí llamarías a tu servicio para guardar en la DB
@@ -144,11 +146,15 @@ onSubmit(): void {
         }
 
 
-    } else {
+   
       Object.values(this.traumaForm.controls).forEach(control => {
         control.markAsTouched();
       });
-    }
+   
+
+
+
+
   }
 
 
