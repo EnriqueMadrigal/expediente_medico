@@ -11,6 +11,7 @@ import { ComponentsTextService } from '../../../services/componentsText.service'
 import { ComponentsText } from '../../../models/ComponentsText';
 import { Traumatismo } from '../../../models/Traumatismo';
 import { Location } from '@angular/common';
+import { TraumaService } from '../../../services/trauma.service';
 
 
 
@@ -60,7 +61,8 @@ authService: any;
     private componentsTextService : ComponentsTextService,
     private auth: AuthService,
     private location: Location,
-    private route: ActivatedRoute ) {
+    private route: ActivatedRoute,
+    private traumaService: TraumaService ) {
     this.authService = auth;
    }
 
@@ -73,6 +75,10 @@ ngOnInit(): void {
     this.safeCallComponents(this.componentText1,"9");
     this.safeCallComponents(this.componentText2,"10");
     this.safeCallComponents(this.componentText3,"11");
+
+    if (this.id != "0") {
+      this.safeCall(this.id);
+    }
 
 }
 
@@ -139,10 +145,10 @@ onSubmit(): void {
           //Registro de nuevos pacientes
          
         if(datosTrauma.id == 0) {
-          //this.RegisterNewPaciente(datosPaciente);
+          this.RegisterNewTrauma(datosTrauma);
         }
         else {
-          //this.UpdatePaciente(datosPaciente);
+          this.UpdateTrauma(datosTrauma);
         }
 
 
@@ -191,6 +197,117 @@ mostrarTrauma(values:any): void {
   this.showTrauma = values.currentTarget.checked;
 }
 
+
+private RegisterNewTrauma(datosTrauma :Traumatismo) {
+
+    this.traumaService.register(datosTrauma)
+           .subscribe({
+              next: (data: ResponseData) => {
+                this.isLoading = false;
+              console.log('Success payload:', data);
+                if (data.error) {
+                     this.showAlert(data.message);
+                }
+                else {
+                  this.router.navigate(['/listadopacientes']);
+                }
+
+              
+        },
+        error: (error: HttpErrorResponse) => {
+          this.isLoading = false;
+           const errorMessage = error.error?.message || error.message || 'An unknown error occurred';
+          if (error.status === 401) {
+            this.showAlert('Unauthorized! Token might be expired.');
+            console.error('Unauthorized! Token might be expired.');
+            // Add your logout or redirection logic here
+          } 
+          else if (error.status === 404) {
+            this.showAlert('Error al registar la información');
+            console.error('404.');
+            // Add your logout or redirection logic here
+          }
+          else {
+            console.error(`Other error occurred: ${error}`);
+            this.showAlert(`Other error occurred: ${error.status} ${errorMessage}`);
+          }
+        }
+      });
+  
+
+    
+  }
+
+
+  private UpdateTrauma(datosTrauma :Traumatismo) {
+
+    this.traumaService.update(datosTrauma)
+           .subscribe({
+              next: (data: ResponseData) => {
+                this.isLoading = false;
+              console.log('Success payload:', data);
+                if (data.error) {
+                     this.showAlert(data.message);
+                }
+                else {
+                  this.router.navigate(['/listadopacientes']);
+                }
+
+              
+        },
+        error: (error: HttpErrorResponse) => {
+          this.isLoading = false;
+           const errorMessage = error.error?.message || error.message || 'An unknown error occurred';
+          if (error.status === 401) {
+            this.showAlert('Unauthorized! Token might be expired.');
+            console.error('Unauthorized! Token might be expired.');
+            // Add your logout or redirection logic here
+          } 
+          else if (error.status === 404) {
+            this.showAlert('Error al registar la información');
+            console.error('404.');
+            // Add your logout or redirection logic here
+          }
+          else {
+            console.error(`Other error occurred: ${error}`);
+            this.showAlert(`Other error occurred: ${error.status} ${errorMessage}`);
+          }
+        }
+      });
+  
+    }
+
+
+async safeCall(id: string) {
+   
+
+      this.traumaService.getTrauma(id).subscribe({
+        next: (data) => {
+           //this.pacientes = [...this.pacientes, data];   
+                    this.currentTrauma = data;   
+          this.traumaForm.patchValue(this.currentTrauma);
+          console.log(this.currentTrauma);
+
+        },
+        error: (err) => {
+          console.error("Error reading trauma");
+           this.showAlert('Error al obtener la información');
+        }
+
+      });
+
+    //const data = await firstValueFrom(this.pacienteService.getPacientes()); 
+
+  
+}
+
+
+
+
+async showAlert(message: string) {
+    await this.alerts.error(message, 'Error');
+    // Continue flow after it closes
+  }
 
 
 
