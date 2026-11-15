@@ -55,7 +55,7 @@
           <div class="col-md-2">
             <label class="form-label">Tipo de traumatismo:  </label><br />
             <select class="form-select" formControlName="id_trauma" name="id_trauma">
-                 @for (item of componentText1(); track item.Id) {
+                 @for (item of componentText1(); track $index) {
               <option [value]="item.valueId">{{ item.textValue }}</option>
                     } 
             </select>
@@ -97,7 +97,7 @@
           <div class="col-md-2">
             <label class="form-label">Tipo de tratamiento </label><br />
             <select class="form-select" formControlName="id_tratamiento" name="id_tratamiento">
-                 @for (item of componentText2(); track item.Id) {
+                 @for (item of componentText2(); track $index) {
               <option [value]="item.valueId">{{ item.textValue }}</option>
                     } 
             </select>
@@ -143,7 +143,7 @@
  <div class="col-md-2">
             <label class="form-label">Secuela:  </label><br />
             <select class="form-control" formControlName="id_secuela" name="id_secuela">
-                 @for (item of componentText3(); track item.Id) {
+                 @for (item of componentText3(); track $index) {
               <option [value]="item.valueId">{{ item.textValue }}</option>
                     } 
             </select>

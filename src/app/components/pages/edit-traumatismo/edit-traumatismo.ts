@@ -85,11 +85,13 @@ ngOnInit(): void {
 initForm(): void {
 
   this.traumaForm = new FormGroup({
+    id: new FormControl(this.currentTrauma.id),
+    id_paciente: new FormControl(this.currentTrauma.id_paciente),
     traumatismo: new FormControl(this.currentTrauma.traumatismo, Validators.required),
     id_trauma: new FormControl(this.currentTrauma.id_trauma, Validators.required),
     trauma: new FormControl(this.currentTrauma.trauma, Validators.required),
     zona_afectada: new FormControl(this.currentTrauma.zona_afectada, Validators.required),
-    fecha: new FormControl(this.currentTrauma.fecha, Validators.required),
+    fecha: new FormControl(this.formatDate(this.currentTrauma.fecha), [Validators.required]),
     id_tratamiento: new FormControl(this.currentTrauma.id_tratamiento, Validators.required),
     tratamiento: new FormControl(this.currentTrauma.tratamiento, Validators.required),
     secuelas: new FormControl(this.currentTrauma.secuelas, Validators.required),
@@ -138,6 +140,7 @@ onSubmit(): void {
   
       const datosTrauma: Traumatismo = this.traumaForm.value;
       this.isLoading = true;
+      datosTrauma.id = Number(this.traumaForm.get('id')?.value) || 0;
       datosTrauma.id_paciente = Number(this.id);
       datosTrauma.traumatismo = this.showTrauma;
       console.log('Datos a enviar:', datosTrauma );
@@ -209,7 +212,8 @@ private RegisterNewTrauma(datosTrauma :Traumatismo) {
                      this.showAlert(data.message);
                 }
                 else {
-                  this.router.navigate(['/listadopacientes']);
+                  //this.router.navigate(['/listadopacientes']);
+                  this.location.back();
                 }
 
               
@@ -250,7 +254,8 @@ private RegisterNewTrauma(datosTrauma :Traumatismo) {
                      this.showAlert(data.message);
                 }
                 else {
-                  this.router.navigate(['/listadopacientes']);
+                  //this.router.navigate(['/listadopacientes']);
+                  this.location.back();
                 }
 
               
@@ -283,9 +288,14 @@ async safeCall(id: string) {
 
       this.traumaService.getTrauma(id).subscribe({
         next: (data) => {
-           //this.pacientes = [...this.pacientes, data];   
+          
                     this.currentTrauma = data;   
-          this.traumaForm.patchValue(this.currentTrauma);
+          //this.traumaForm.patchValue(this.currentTrauma);
+           this.traumaForm.patchValue({
+      ...data,
+      fecha: this.toDateInputValue(data.fecha)
+    });
+          
           console.log(this.currentTrauma);
 
         },
@@ -309,6 +319,27 @@ async showAlert(message: string) {
     // Continue flow after it closes
   }
 
+ private toDateInputValue(date: string | Date | null | undefined): string | null {
+    if (!date) {
+      return null;
+    }
+
+    if (date instanceof Date) {
+      return this.formatDate(date);
+    }
+
+    return date.substring(0, 10);
+  }
+
+ private formatDate(date: Date | string): string {
+ 
+    const d = new Date(date);
+    console.log(d);
+    const month = '' + (d.getMonth() + 1);
+    const day = '' + d.getDate();
+    const year = d.getFullYear();
+    return [year, month.padStart(2, '0'), day.padStart(2, '0')].join('-');
+  }
 
 
 }

@@ -12,7 +12,7 @@ export class TraumaService {
     headers: HttpHeaders;
     requestOptions: Object;
 
-    private TraumaUrl = '/api/trauma/';
+    private TraumaUrl = '/api/traumatismo/';
     
 
     constructor(
