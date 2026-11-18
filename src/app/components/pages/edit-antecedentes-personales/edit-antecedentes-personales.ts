@@ -81,6 +81,10 @@ editTraumatismo(): void {
   
 }
 
+editEnfermedades(): void {
+ this.router.navigate(['/editEnfermedades/'+ this.id]);
+}
+
 
 
 

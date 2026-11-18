@@ -12,6 +12,7 @@ import { SelecionaHistoria } from './components/pages/seleciona-historia/selecio
 import { EditHeredoFamiliares } from './components/pages/edit-heredo-familiares/edit-heredo-familiares';
 import { EditAntecedentesPersonales } from './components/pages/edit-antecedentes-personales/edit-antecedentes-personales';
 import { EditTraumatismo } from './components/pages/edit-traumatismo/edit-traumatismo';
+import { EditEnfermedades } from './components/pages/edit-enfermedades/edit-enfermedades';
 
 export const routes: Routes = [
 {
@@ -77,6 +78,12 @@ export const routes: Routes = [
 {
     path:'editTraumatismo/:id',
     component:EditTraumatismo,
+    canActivate: [authGuard],
+    data: {roles: ['1','2']}
+},
+{
+    path:'editEnfermedades/:id',
+    component:EditEnfermedades,
     canActivate: [authGuard],
     data: {roles: ['1','2']}
 },
