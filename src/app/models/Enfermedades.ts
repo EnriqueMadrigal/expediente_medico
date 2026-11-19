@@ -8,7 +8,7 @@ export interface Enfermedades {
   id_geneticas: number;
   fecha: Date | string;
   tiempo_evolucion: string;
-  id_tratamiento: number;
+  tratamiento: string;
   id_control: number;
   ultimo_control: Date | string;
   proximo_control: Date | string;

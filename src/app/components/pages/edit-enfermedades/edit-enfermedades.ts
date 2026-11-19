@@ -32,6 +32,9 @@ authService: any;
   componentText2 = signal<ComponentsText[]>([]);
   componentText3 = signal<ComponentsText[]>([]);
   componentText4 = signal<ComponentsText[]>([]);
+  componentText5 = signal<ComponentsText[]>([]);
+  componentText6 = signal<ComponentsText[]>([]);
+  componentText7 = signal<ComponentsText[]>([]);
 
 
 currentEnfermedades: Enfermedades = {
@@ -44,7 +47,7 @@ currentEnfermedades: Enfermedades = {
   id_geneticas: 0,
   fecha: new Date(),
   tiempo_evolucion: '',
-  id_tratamiento: 0,
+  tratamiento: '',
   id_control: 0,
   ultimo_control: new Date(),
   proximo_control: new Date(),
@@ -79,6 +82,11 @@ ngOnInit(): void {
     this.safeCallComponents(this.componentText1,"12");
     this.safeCallComponents(this.componentText2,"13");
     this.safeCallComponents(this.componentText3,"14");
+    this.safeCallComponents(this.componentText4,"15");
+    this.safeCallComponents(this.componentText5,"16");
+    this.safeCallComponents(this.componentText6,"17");
+
+
 
     if (this.id != "0") {
       //this.safeCall(this.id);
@@ -99,7 +107,7 @@ this.enfermedadesForm = new FormGroup({
   id_geneticas: new FormControl(this.currentEnfermedades.id_geneticas),
   fecha: new FormControl(this.currentEnfermedades.fecha),
   tiempo_evolucion: new FormControl(this.currentEnfermedades.tiempo_evolucion),
-  id_tratamiento: new FormControl(this.currentEnfermedades.id_tratamiento),
+  tratamiento: new FormControl(this.currentEnfermedades.tratamiento),
   id_control: new FormControl(this.currentEnfermedades.id_control),
   ultimo_control: new FormControl(this.currentEnfermedades.ultimo_control),
   proximo_control: new FormControl(this.currentEnfermedades.proximo_control),
@@ -157,6 +165,9 @@ onSubmit(): void {
 
 }
 
+clickCancel(){
+      this.location.back();
+}
 
 
 
