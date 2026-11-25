@@ -13,6 +13,7 @@ import { EditHeredoFamiliares } from './components/pages/edit-heredo-familiares/
 import { EditAntecedentesPersonales } from './components/pages/edit-antecedentes-personales/edit-antecedentes-personales';
 import { EditTraumatismo } from './components/pages/edit-traumatismo/edit-traumatismo';
 import { EditEnfermedades } from './components/pages/edit-enfermedades/edit-enfermedades';
+import {AddEnfermedad} from './components/pages/add-enfermedad/add-enfermedad';
 
 export const routes: Routes = [
 {
@@ -87,6 +88,13 @@ export const routes: Routes = [
     canActivate: [authGuard],
     data: {roles: ['1','2']}
 },
+{
+    path:'addEnfermedad/:id',
+    component:AddEnfermedad,
+    canActivate: [authGuard],
+    data: {roles: ['1','2']}
+}
+,
 {
     path:'**',
     redirectTo: 'dashboard',
